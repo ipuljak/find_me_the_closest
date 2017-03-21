@@ -20,6 +20,7 @@ class SearchBar extends Component {
 
   // When a location term is submitted
   onSubmit(event) {
+    console.log("event", event);
     // Prevent the form submit from reloading the page
     event.preventDefault()
     // Submit the location term
@@ -38,15 +39,25 @@ class SearchBar extends Component {
   render() {
     return (
       <div className="wrapper">
-        <form onSubmit={this.onSubmit}>
+        <form>
           <input
             className="searchBar"
             type="text"
-            placeholder="Enter Your Location"
+            placeholder="Enter your location.."
             onChange={this.handleOnChange}
             value={this.state.term}
             ref="searchInput" />
-          <button className="btn btn-default searchButton">Search</button>
+          <div className="icons">
+            <button onClick={this.onSubmit({find: 'coffee'})}>
+              <i className="fa fa-coffee" aria-hidden="true"></i>
+            </button>
+            <button>
+              <i className="fa fa-car" aria-hidden="true"></i>
+            </button>
+            <button>
+              <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+            </button>
+          </div>
         </form>
       </div>
     )
