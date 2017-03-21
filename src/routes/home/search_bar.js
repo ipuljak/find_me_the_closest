@@ -9,7 +9,6 @@ class SearchBar extends Component {
     super(props)
 
     this.state = { term: '' }
-    this.onSubmit = this.onSubmit.bind(this)
     this.handleOnChange = this.handleOnChange.bind(this)
   }
 
@@ -19,16 +18,25 @@ class SearchBar extends Component {
   }
 
   // When a location term is submitted
-  onSubmit(event) {
-    console.log("event", event);
-    // Prevent the form submit from reloading the page
-    event.preventDefault()
+  buttonClick(type) {
+    switch (type) {
+      case 'coffee':
+        console.log('Its coffee')
+        break
+      case 'car':
+        console.log('Car!')
+        break
+      case 'grocery':
+        console.log('Grocery shopping')
+        break
+      default:
+        break
+    }
     // Submit the location term
     if (this.state.term !== '') {
       this.props.setLocation(this.state.term)
     }
-    // Reset the search bar
-    this.setState({ term: '' })
+    //this.setState({term: ''});
   }
 
   // Update the search bar state for each key press
@@ -39,26 +47,24 @@ class SearchBar extends Component {
   render() {
     return (
       <div className="wrapper">
-        <form>
-          <input
-            className="searchBar"
-            type="text"
-            placeholder="Enter your location.."
-            onChange={this.handleOnChange}
-            value={this.state.term}
-            ref="searchInput" />
-          <div className="icons">
-            <button onClick={this.onSubmit({find: 'coffee'})}>
-              <i className="fa fa-coffee" aria-hidden="true"></i>
-            </button>
-            <button>
-              <i className="fa fa-car" aria-hidden="true"></i>
-            </button>
-            <button>
-              <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-            </button>
-          </div>
-        </form>
+        <input
+          className="searchBar"
+          type="text"
+          placeholder="Enter your location.."
+          onChange={this.handleOnChange}
+          value={this.state.term}
+          ref="searchInput" />
+        <div className="icons">
+          <button onClick={() => this.buttonClick('coffee')}>
+            <i className="fa fa-coffee" aria-hidden="true"></i>
+          </button>
+          <button onClick={() => this.buttonClick('car')}>
+            <i className="fa fa-car" aria-hidden="true"></i>
+          </button>
+          <button onClick={() => this.buttonClick('grocery')}>
+            <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     )
   }
