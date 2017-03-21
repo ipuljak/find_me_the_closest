@@ -1,0 +1,62 @@
+.center {
+  width: 50%;
+  height: 50%;
+  
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  margin: auto;
+}
+
+.logo {
+  color: white;
+}
+
+.logo h1 {
+  font-size: 5em;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  font-family: Orbitron;
+}
+
+.logo p {
+  font-size: 1.5em;
+}
+
+.searchBar {
+  margin: 10px 0;
+  font-size: 3.5vh;
+  border: none;
+  text-align: center;
+}
+
+.searchBar:focus {
+  outline: none;
+}
+
+.root {
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../../public/images/background_findme.jpg);
+  background-position: center;
+  background-size: cover;
+  border: none;
+  height: 100vh;
+  min-height: auto;
+  position: relative;
+  text-align: center;
+  transition: height 999999s;
+  width: 100%;
+}
+
+.wrapper {
+  text-align: center;
+}
+
+.wrapper button {
+  display: block;
+  margin: 0 auto;
+}
