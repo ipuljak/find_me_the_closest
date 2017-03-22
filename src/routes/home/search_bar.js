@@ -15,6 +15,9 @@ class SearchBar extends Component {
   // Focus on the search bar once it mounts
   componentDidMount() {
     findDOMNode(this.refs.searchInput).focus()
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.setState({term: position.coords.latitude + ', ' + position.coords.longitude})
+    })
   }
 
   // When a location term is submitted
