@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 
 import Home from '../../routes/home'
-import Test from '../../routes/test'
+import Coffee from '../../routes/coffee'
 import './App.css'
 
 /**
@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <div className="root">
         <Route exact path='/' component={Home} />
-        <Route exact path='/test' component={Test} />
+        <Route exact path='/coffee' component={Coffee} />
       </div>
     )
   }

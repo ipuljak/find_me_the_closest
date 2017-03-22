@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import * as actions from '../../actions'
 
@@ -16,7 +17,7 @@ class SearchBar extends Component {
   componentDidMount() {
     findDOMNode(this.refs.searchInput).focus()
     navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({term: position.coords.latitude + ', ' + position.coords.longitude})
+      this.setState({ term: position.coords.latitude + ', ' + position.coords.longitude })
     })
   }
 
@@ -58,9 +59,11 @@ class SearchBar extends Component {
           value={this.state.term}
           ref="searchInput" />
         <div className="icons">
-          <button onClick={() => this.buttonClick('coffee')}>
-            <i className="fa fa-coffee" aria-hidden="true"></i>
-          </button>
+          <Link to='/coffee'>
+            <button>
+              <i className="fa fa-coffee" aria-hidden="true"></i>
+            </button>
+          </Link>
           <button onClick={() => this.buttonClick('car')}>
             <i className="fa fa-car" aria-hidden="true"></i>
           </button>
