@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { findDOMNode } from 'react-dom'
 import { connect } from 'react-redux'
+import Geosuggest from 'react-geosuggest';
 
 import * as actions from '../../actions'
 
@@ -9,12 +9,11 @@ class SearchBar extends Component {
     super(props)
 
     this.state = { term: '', geoloc: '' }
-    this.handleOnChange = this.handleOnChange.bind(this)
+    this.suggestSelect = this.suggestSelect.bind(this)
   }
 
   // Focus on the search bar once it mounts and enter in the geolocation
   componentDidMount() {
-    findDOMNode(this.refs.searchInput).focus()
     navigator.geolocation.getCurrentPosition(position => {
       let pos = position.coords.latitude + ', ' + position.coords.longitude
       this.setState({ term: pos, geoloc: pos })
@@ -36,26 +35,27 @@ class SearchBar extends Component {
       } else {
         alert('Enter a location.')
       }
-      
     }
-    //this.setState({term: ''});
   }
 
-  // Update the search bar state for each key press
-  handleOnChange(event) {
-    this.setState({ term: event.target.value })
+  // Check if the suggestion is a valid object 
+  suggestSelect(loc) {
+    if (loc.location) {
+      this.props.setLocation(loc.location)
+    } else {
+      this.props.fetchLocation(loc)
+    }
   }
 
   render() {
     return (
       <div className="wrapper">
-        <input
-          className="searchBar"
-          type="text"
-          placeholder="Enter your location.."
-          onChange={this.handleOnChange}
-          value={this.state.term}
-          ref="searchInput" />
+        <Geosuggest
+          autoActivateFirstSuggest={true}
+          initialValue={this.state.geoloc}
+          onBlur={this.suggestSelect}
+          onSuggestSelect={this.suggestSelect}
+          />
         <div className="icons">
           <button onClick={() => this.buttonClick('car')}>
             <i className="fa fa-coffee" aria-hidden="true"></i>

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {GOOGLE_MAP_API_KEY} from '../config'
+import { GOOGLE_MAP_API_KEY } from '../config'
 
 const ROOT_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address='
 
@@ -23,7 +23,6 @@ export const setLocation = coordinates => {
  */
 export const fetchLocation = search => {
   const API_CALL = `${ROOT_URL}${search}&key=${GOOGLE_MAP_API_KEY}`
-  console.log(API_CALL)
   return dispatch => {
     axios.get(API_CALL)
       .then(response => {
