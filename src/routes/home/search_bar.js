@@ -8,16 +8,20 @@ class SearchBar extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { term: '' }
+    this.state = { term: '', geoloc: '' }
     this.handleOnChange = this.handleOnChange.bind(this)
   }
 
   // Focus on the search bar once it mounts and enter in the geolocation
   componentDidMount() {
     findDOMNode(this.refs.searchInput).focus()
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({ term: position.coords.latitude + ', ' + position.coords.longitude })
-    })
+    navigator.geolocation.getCurrentPosition(position => {
+      let pos = position.coords.latitude + ', ' + position.coords.longitude
+      this.setState({ term: pos, geoloc: pos })
+    },
+      error => {
+        console.log('error', error)
+      }, { timeout: 10000 })
   }
 
   // When a location term is submitted
@@ -26,11 +30,13 @@ class SearchBar extends Component {
     if (this.state.term !== '') {
       this.props.fetchLocation(this.state.term)
     } else {
-      // If no location term is given, use the geolocation
-      navigator.geolocation.getCurrentPosition((position) => {
-        let location = position.coords.latitude + ', ' + position.coords.longitude
-        this.props.fetchLocation(location)
-      })
+      // If no location term is given, try to use the geolocation
+      if (this.state.geoloc !== '') {
+        this.props.fetchLocation(this.state.geoloc)
+      } else {
+        alert('Enter a location.')
+      }
+      
     }
     //this.setState({term: ''});
   }
