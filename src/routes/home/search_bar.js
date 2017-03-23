@@ -13,7 +13,7 @@ class SearchBar extends Component {
     this.handleOnChange = this.handleOnChange.bind(this)
   }
 
-  // Focus on the search bar once it mounts
+  // Focus on the search bar once it mounts and enter in the geolocation
   componentDidMount() {
     findDOMNode(this.refs.searchInput).focus()
     navigator.geolocation.getCurrentPosition((position) => {
@@ -23,22 +23,15 @@ class SearchBar extends Component {
 
   // When a location term is submitted
   buttonClick(type) {
-    switch (type) {
-      case 'coffee':
-        console.log('Its coffee')
-        break
-      case 'car':
-        console.log('Car!')
-        break
-      case 'grocery':
-        console.log('Grocery shopping')
-        break
-      default:
-        break
-    }
     // Submit the location term
     if (this.state.term !== '') {
-      this.props.setLocation(this.state.term)
+      this.props.fetchLocation(this.state.term)
+    } else {
+      // If no location term is given, use the geolocation
+      navigator.geolocation.getCurrentPosition((position) => {
+        let location = position.coords.latitude + ', ' + position.coords.longitude
+        this.props.fetchLocation(location)
+      })
     }
     //this.setState({term: ''});
   }
@@ -59,11 +52,9 @@ class SearchBar extends Component {
           value={this.state.term}
           ref="searchInput" />
         <div className="icons">
-          <Link to='/coffee'>
-            <button>
-              <i className="fa fa-coffee" aria-hidden="true"></i>
-            </button>
-          </Link>
+          <button onClick={() => this.buttonClick('car')}>
+            <i className="fa fa-coffee" aria-hidden="true"></i>
+          </button>
           <button onClick={() => this.buttonClick('car')}>
             <i className="fa fa-car" aria-hidden="true"></i>
           </button>

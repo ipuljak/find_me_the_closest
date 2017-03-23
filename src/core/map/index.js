@@ -1,21 +1,32 @@
-import React, {Component} from 'react'
-import {GoogleMapLoader, GoogleMap, Marker} from 'react-google-maps'
+import React, { Component } from 'react'
+import { GoogleMapLoader, GoogleMap, Marker } from 'react-google-maps'
 
 class SimpleMap extends Component {
   render() {
-    const mapContainer = <div style={{height: '70%', width: '100%'}}></div>
+    const mapContainer = <div style={{ height: '70%', width: '100%' }}></div>
+
+    const markers = this.props.markers.map((loc, i) => {
+      const marker = {
+        position: {
+          lat: loc.location.lat,
+          lng: loc.location.lng
+        }
+      }
+      return <Marker key={i} {...marker} />
+    })
 
     return (
       <GoogleMapLoader
-        containerElement = {mapContainer}
-        googleMapElement = {
+        containerElement={mapContainer}
+        googleMapElement={
           <GoogleMap
             defaultZoom={15}
             defaultCenter={this.props.center}
-            options={{streetViewControl: false, mapTypeControl: false}}>
+            options={{ streetViewControl: false, mapTypeControl: false }}>
+            {markers}
           </GoogleMap>
         }
-      />
+        />
     )
   }
 }
