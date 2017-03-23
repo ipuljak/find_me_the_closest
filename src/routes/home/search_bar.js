@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import * as actions from '../../actions'
 
